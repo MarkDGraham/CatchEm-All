@@ -35,7 +35,7 @@ public class EntityManager : MonoBehaviour
     }
 
     // Variables:
-    private float _upperBound = 8.0f, _lowerBound = -8.0f, _yHeight = 12.0f;
+    private float _upperBound = 8.0f, _lowerBound = -8.0f, _yHeight = 11.0f;
     private List<int> _spawnRates = new List<int> { 0, 0, 0, 0, 0, 1, 2, 3, 4 };
     [SerializeField] List<GameObject> _basicBallPool = new List<GameObject>();
     [SerializeField] List<GameObject> _scoreUpPool = new List<GameObject>();
