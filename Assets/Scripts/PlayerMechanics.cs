@@ -54,7 +54,7 @@ public class PlayerMechanics : MonoBehaviour
         // Calls child class method.
         if (other.gameObject.name == "TimeDownBall")
         {
-            other.gameObject.GetComponent<ScoreDown>().SpecialEvent();
+            other.gameObject.GetComponent<TimeDown>().SpecialEvent();
             EntityManager.instance.DeactivateObject(other.gameObject);
         }
     }

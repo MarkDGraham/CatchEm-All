@@ -36,7 +36,7 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] InputActions playerInput;                  // Player input action mapping.
     private InputAction _pause, _move;                          // Individual actions used in mapping.
     private GameObject Player;                                  // Player object for movement.
-    private float _moveSpeed = 9.0f;                            // Player movement speed.
+    private float _moveSpeed = 15.0f;                            // Player movement speed.
     private float _upperBound = 10.0f, _lowerBound = -10.0f;    // Player input bound checking.
 
     void Awake()

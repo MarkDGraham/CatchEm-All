@@ -14,6 +14,13 @@ using UnityEngine;
  *  Modification Log:
  *      2022:
  *          December:
+ *              20: Implemented game over and pause UI activators.
+ *              17: [FIX] End game mechanic placed in seperate conditional
+ *                  statement to allow for correction.
+ *              17: [BUG] Game ends right as timeup special event called
+ *                  (negates the time increase).
+ *              17: [FIX] Game over mechanic now in In-Game state.
+ *              17: [BUG] Game doesn't stop after timer reaches 0.
  *              11: Implemented end game mechanic.
  *              11: Implemented spawn mechanic.
  *              11: Implemented accessor method to pause value.
@@ -47,28 +54,28 @@ public class GameManager : MonoBehaviour
     // Variables:
     private int _score = 0,  _scoreRange = 5;
     private const int _defaultScore = 0;
-    private float _timeRange = 5, _timer = 30.0f, _spawnRate = .5f;
-    private const float _defaultTimer = 30.0f;
+    private float _timeRange = 5, _timer = 45.0f, _spawnRate = .5f;
+    private const float _defaultTimer = 45.0f;
     private bool _isPaused = false, _isOver = false;
 
     // Methods:
     // Game Layout
     void Update()
     {
+        if(_timer <= 0.0f && !(_isPaused || _isOver))       // End game mechanic.
+            GameOver();
+
         // ABSTRACTION:
         if(!(_isPaused || _isOver))
         {
             UpdateTimeValue(-Time.deltaTime);               // Reduces the time clock of the game state.
             if (_spawnRate <= 0.0f)
             {
-                _spawnRate = 2.0f;                          // Resets the spawn delay between spawns.
+                _spawnRate = 1.5f;                          // Resets the spawn delay between spawns.
                 EntityManager.instance.SpawnObject();       // ABSTRACTION call to spawn enemy.
             }
-            _spawnRate -= Time.deltaTime;                   // Countdowns the spawn delay.
+            _spawnRate -= Time.deltaTime;                   // Countdowns the spawn delay.                  
         }
-
-        if(_timer <= 0.0f)                                  // End game mechanic.
-            GameOver();
     }
 
     /*
@@ -133,6 +140,7 @@ public class GameManager : MonoBehaviour
     public void TogglePause()
     {
         _isPaused = !_isPaused;
+        UIManager.instance.PauseUI();
     }
 
     /*
@@ -157,6 +165,12 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         _isOver = !_isOver;
+        UIManager.instance.GameOverUI();
+    }
+
+    public bool GetGameState()
+    {
+        return _isOver;
     }
 
     /*
@@ -168,8 +182,7 @@ public class GameManager : MonoBehaviour
      */
     public void ResetGame()
     {
-        _timer = _defaultTimer;
-        _score = _defaultScore;
+        UIManager.instance.ResetGame();
     }
 
     /*

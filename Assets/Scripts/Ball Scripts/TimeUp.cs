@@ -21,7 +21,7 @@ using UnityEngine;
 public class TimeUp : Ball
 {
     // Variables:
-    private float _eventTime = 3.0f;
+    private float _eventTime = 5.0f;
 
     // POLYMORPHISM
     // Overrides base class in Ball.
